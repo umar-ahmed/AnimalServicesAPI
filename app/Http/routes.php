@@ -1,7 +1,7 @@
 <?php
 
-use App\Task;
 use Illuminate\Http\Request;
+use App\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,44 +14,22 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', function () {
-    
-    $tasks = Task::orderBy('created_at', 'asc')->get();
-    
-    return view('tasks', [
-        'tasks' => $tasks
-    ]);
+Route::get('/', function() {
+	return View::make('index');
 });
 
+// API routes
+Route::group(['prefix' => 'api/v1'], function () {
 
-/**
- * Add New Task
- */
-Route::post('/task', function(Request $request) {
-    $validator = Validator::make($request->all(), [
-        'name' => 'required|max:255',
-    ]);
-    
-    if ($validator->fails()) {
-        return redirect('/')
-            ->withInput()
-            ->withErrors($validator);
-    }
-    
-    // Create the task
-    $task = new Task;
-    $task->name = $request->name;
-    $task->save();
-    
-    return redirect('/');
-});
+	// User Routes
+	Route::get('users/{id}', 'UserController@index');
+	Route::get('users', 'UserController@feed');
+	Route::get('users/{id}/feed', function($id) {
+		echo User::find($id)->dogs()->orderBy('name')->get();
+	});
 
-/**
- * Delete Task
- */
-Route::delete('/task/{task}', function(Task $task) {
-    
-    $task->delete();
-    
-    return redirect('/');    
+	// Dog Routes
+	Route::get('dogs/{id}', 'DogController@index');
+	Route::get('dogs', 'DogController@feed');
+
 });
