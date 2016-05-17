@@ -21,6 +21,14 @@ Route::get('/', 'HomeController@index');
 // API routes
 Route::group(['prefix' => 'api/v1'], function () {
 
+	Route::get('/', function() {
+		return Response::json([
+			'user_url' => '/api/v1/users/{id}',
+			'dogs_url' => '/api/v1/dogs/{id}',
+			'feed_url' => '/api/v1/feed/{code}'
+		], 200);
+	});
+
 	// User Routes
 	Route::get('users/{id}', [
 		'middleware' => 'auth',
