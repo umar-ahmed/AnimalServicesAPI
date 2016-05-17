@@ -16,53 +16,35 @@ class UserController extends Controller
 		
 		try {
 			$statusCode = 200;
-			$response = [
-				'users' => []
-			];
+			$response = [];
 
 			// Selection
 			$users = User::where('id', $id)->get();
 
-			foreach($users as $user){
+			if ( sizeof($users) == 0) {
+				array_push($response, [
+					'message' => "Not Found", 
+					'documentation_url' => "https://github.com/umar-ahmed/AnimalServicesAPI"
+				]);
+				$statusCode = 404;
+			} else {
 
-                $response['users'][] = [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'code' => $user->code,
-                ];
-            }
+				foreach($users as $user) {
+
+	                array_push($response, [
+	                    'id' => $user->id,
+	                    'name' => $user->name,
+	                    'email' => $user->email,
+	                    'username' => $user->username,
+	                    'code' => $user->code,
+	                ]);
+	            }
+        	}
 		} catch (Exception $e) {
 			$statusCode = 400;
 		} finally {
-			return Response::json($response['users'], $statusCode);
+			return Response::json($response[0], $statusCode);
 		}
 	}
-
-	public function feed() {
-		try {
-			$statusCode = 200;
-			$response = [
-				'users' => []
-			];
-
-			// Selection
-			$users = User::take(5)->get();
-
-			foreach($users as $user){
-
-                $response['users'][] = [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'code' => $user->code,
-                ];
-            }
-		} catch (Exception $e) {
-			$statusCode = 400;
-		} finally {
-			return Response::json($response['users'], $statusCode);
-		}
-   }
 
 }

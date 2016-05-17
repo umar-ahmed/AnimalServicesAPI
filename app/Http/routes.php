@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\User;
+use App\Dog;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,22 +14,28 @@ use App\User;
 |
 */
 
-Route::get('/', function() {
-	return View::make('index');
-});
+Route::auth();
+
+Route::get('/', 'HomeController@index');
 
 // API routes
 Route::group(['prefix' => 'api/v1'], function () {
 
 	// User Routes
-	Route::get('users/{id}', 'UserController@index');
-	Route::get('users', 'UserController@feed');
-	Route::get('users/{id}/feed', function($id) {
-		echo User::find($id)->dogs()->orderBy('name')->get();
-	});
+	Route::get('users/{id}', [
+		'middleware' => 'auth',
+		'uses' => 'UserController@index'
+	]);
+
+	// Feed Routes
+	Route::get('feed/{code}', [
+		'middleware' => 'auth',
+		'uses' => 'FeedController@index'
+	]);
 
 	// Dog Routes
 	Route::get('dogs/{id}', 'DogController@index');
 	Route::get('dogs', 'DogController@feed');
 
 });
+

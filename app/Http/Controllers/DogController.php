@@ -15,24 +15,25 @@ class DogController extends Controller
 		
 		try {
 			$statusCode = 200;
-			$response = [
-				'dogs' => []
-			];
+			$response = [];
 
 			// Selection
 			$dogs = Dog::where('id', $id)->get();
 
-			foreach($dogs as $dog){
+			if ( sizeof($dogs) == 0) {
+				array_push($response, [
+					'message' => "Not Found", 
+					'documentation_url' => "https://github.com/umar-ahmed/AnimalServicesAPI"
+				]);
+				$statusCode = 404;
+			} else {
+				$response = $dogs;
+			}
 
-                $response['dogs'][] = [
-                    'reference_num' => $dog->reference_num,
-                    'name' => $dog->name,
-                ];
-            }
 		} catch (Exception $e) {
 			$statusCode = 400;
 		} finally {
-			return Response::json($response, $statusCode);
+			return Response::json($response[0], $statusCode);
 		}
 	}
 
@@ -40,19 +41,19 @@ class DogController extends Controller
 		
 		try {
 			$statusCode = 200;
-			$response = [
-				'dogs' => []
-			];
+			$response = [];
 
 			// Selection
-			$dogs = Dog::take(5)->get();
+			$dogs = Dog::orderBy('created_at', 'desc')
+				->take(5)
+				->get();
 
 			foreach($dogs as $dog){
-
-                $response['dogs'][] = [
-                    'reference_num' => $dog->reference_num,
+				array_push($response, [
+                    'id' => $dog->id,
                     'name' => $dog->name,
-                ];
+                    'reference_num' => $dog->reference_num,
+                ]);
             }
 		} catch (Exception $e) {
 			$statusCode = 400;
