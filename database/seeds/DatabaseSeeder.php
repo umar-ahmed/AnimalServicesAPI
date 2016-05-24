@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder
 		// Add or Uncomment this line
 		$this->call(UsersTableSeeder::class);
         $this->call(DogsTableSeeder::class);
+        $this->call('OAuthClientsSeeder');
+        $this->call('OAuthUsersSeeder');
 
         Eloquent::reguard();
     }
