@@ -1,9 +1,7 @@
 <?php
 
 // use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Request;
 use App\Dog;
-use App\Http\Controllers\MyPDO;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,27 +14,26 @@ use App\Http\Controllers\MyPDO;
 |
 */
 
-/* OAUTH TOKEN ROUTES */
-App::singleton('oauth2', function() {
-    
-    $storage = new MyPDO(App::make('db')->getPdo());
-    $server = new OAuth2\Server($storage);
-    
-    $server->addGrantType(new OAuth2\GrantType\ClientCredentials($storage));
-    $server->addGrantType(new OAuth2\GrantType\UserCredentials($storage));
-    
-    return $server;
+
+/* OAUTH ROUTES */
+Route::get('/register', function(){
+	$user = new App\User();
+	$user->name='test user';
+	$user->email='test@test.com';
+	$user->password = \Illuminate\Support\Facades\Hash::make('password');
+	$user->save();
 });
 
 
-Route::post('oauth/token', 'OAuthController@getOAuthToken');
+Route::post('oauth/access_token', function() {
+	return Response::json(Authorizer::issueAccessToken());
+});
 
 
 /*  OTHER ROUTES  */
-
-Route::auth();
-
-Route::get('/', 'HomeController@index');
+Route::get('/', function() {
+	return view('home');
+});
 
 // API routes
 Route::group(['prefix' => 'api/v1', 'middleware' => 'oauth'], function () {
@@ -50,16 +47,13 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'oauth'], function () {
 	});
 
 	// User Routes
-	Route::resource('users/{id}', 'UserController@show');
+	Route::resource('users', 'UserController');
 
 	// Dog Routes
 	Route::resource('dogs', 'DogController');
 	
 	// Feed Routes
-	Route::get('feed/{code}', [
-		'middleware' => 'auth',
-		'uses' => 'FeedController@index'
-	]);
+	Route::get('feed/{code}', 'FeedController@index');
 
 });
 

@@ -1,18 +1,22 @@
-<?php namespace App\Http\Controllers;
+<?php
 
-use Illuminate\Http\Request;
+namespace App\Http\Controllers;
 
-class OAuthController extends Controller {
+use Auth;
 
-	public function getOAuthToken(Request $request) {
 
-		$bridgedRequest  = \OAuth2\HttpFoundationBridge\Request::createFromRequest($request->instance());
-		$bridgedResponse = new \OAuth2\HttpFoundationBridge\Response();
-		
-		$bridgedResponse = \App::make('oauth2')->handleTokenRequest($bridgedRequest, $bridgedResponse);
-		
-		return $bridgedResponse;
+class OAuthController extends Controller
+{
+	public function verify($username, $password){
+		$credentials = [
+			'email' => $username,
+			'password' => $password,
+		];
 
+		if (Auth::once($credentials)) {
+			return Auth::user()->id;
+		} else {
+			return false;
+		}
 	}
-
 }

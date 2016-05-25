@@ -160,6 +160,12 @@ return [
          * HTML Provider
          */
         Collective\Html\HtmlServiceProvider::class,
+
+        /*
+         * OAuth Server
+         */
+        LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider::class,
+        LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class,
                 
         /*
          * Twig Provider
@@ -215,6 +221,8 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Twig' => TwigBridge\Facade\Twig::class,
+
+        'Authorizer' => LucaDegasperi\OAuth2Server\Facades\Authorizer::class,
 
     ],
 

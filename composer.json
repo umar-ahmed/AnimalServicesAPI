@@ -9,8 +9,7 @@
         "laravel/framework": "5.2.*",
         "laravelcollective/html": "5.2.*",
         "rcrowe/twigbridge": "^0.9.2",
-        "bshaffer/oauth2-server-php": "^1.8",
-        "bshaffer/oauth2-server-httpfoundation-bridge": "^1.1"
+        "lucadegasperi/oauth2-server-laravel": "5.1.x@dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
