@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Response;
 use App\User;
+use Validator;
+use Hash;
 
 class UserController extends Controller
 {
@@ -25,7 +27,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create() 
     {
         //
     }
@@ -38,7 +40,39 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $rules = array(
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'username' => 'required|unique:users',
+            'password' => 'required|min:5',
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return Response::json( array(
+                'error' => 'Malformed request.',
+                'error_description' => $validator->errors()->all()
+            ), 409);
+        } else {
+
+            // Store data
+            $user = new User;
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
+            $user->username = $request->input('username');
+            $user->password = Hash::make($request->input('password'));
+            $user->save();
+
+            // Return response
+            return Response::json( array(
+                'message' => 'User created successfully',
+                'client_id' => 'f3d259ddd3ed8ff3843839b',
+                'client_secret' => '4c7f6f8fa93d59c45502c0ae8c4a95b'
+            ), 200);
+        }
+
     }
 
     /**

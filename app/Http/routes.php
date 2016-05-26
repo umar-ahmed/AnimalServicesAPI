@@ -1,7 +1,6 @@
 <?php
 
 // use Illuminate\Http\Request;
-use App\Dog;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,26 +13,17 @@ use App\Dog;
 |
 */
 
-
-/* OAUTH ROUTES */
-Route::get('/register', function(){
-	$user = new App\User();
-	$user->name='test user';
-	$user->email='test@test.com';
-	$user->password = \Illuminate\Support\Facades\Hash::make('password');
-	$user->save();
+Route::get('/', function() {
+	return view('home');
 });
 
 
+/* OAUTH ROUTES */
 Route::post('oauth/access_token', function() {
 	return Response::json(Authorizer::issueAccessToken());
 });
 
-
-/*  OTHER ROUTES  */
-Route::get('/', function() {
-	return view('home');
-});
+Route::post('api/v1/users', 'UserController@store');
 
 // API routes
 Route::group(['prefix' => 'api/v1', 'middleware' => 'oauth'], function () {
@@ -47,7 +37,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'oauth'], function () {
 	});
 
 	// User Routes
-	Route::resource('users', 'UserController');
+	//Route::resource('users', 'UserController');
 
 	// Dog Routes
 	Route::resource('dogs', 'DogController');
