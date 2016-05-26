@@ -81,7 +81,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($username)
     {
 
         try {
@@ -89,7 +89,7 @@ class UserController extends Controller
             $response = [];
 
             // Selection
-            $users = User::where('username', $id)->get();
+            $users = User::where('username', $username)->get();
 
             if ( sizeof($users) == 0) {
                 array_push($response, [
@@ -102,11 +102,9 @@ class UserController extends Controller
                 foreach($users as $user) {
 
                     array_push($response, [
-                        'id' => $user->id,
                         'name' => $user->name,
                         'email' => $user->email,
                         'username' => $user->username,
-                        'code' => $user->code,
                     ]);
                 }
             }

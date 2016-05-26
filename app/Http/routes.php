@@ -25,6 +25,7 @@ Route::post('oauth/access_token', function() {
 
 Route::post('api/v1/users', 'UserController@store');
 
+
 // API routes
 Route::group(['prefix' => 'api/v1', 'middleware' => 'oauth'], function () {
 
@@ -36,8 +37,13 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'oauth'], function () {
 		], 200);
 	});
 
-	// User Routes
-	//Route::resource('users', 'UserController');
+	// Users Routes
+	Route::resource('users', 'UserController', ['except' => [
+    	'store'
+	]]);
+
+	// Account Routes
+	Route::resource('account', 'AccountController');
 
 	// Dog Routes
 	Route::resource('dogs', 'DogController');

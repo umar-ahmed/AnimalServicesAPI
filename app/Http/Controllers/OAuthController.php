@@ -9,7 +9,7 @@ class OAuthController extends Controller
 {
 	public function verify($username, $password){
 		$credentials = [
-			'email' => $username,
+			'username' => $username,
 			'password' => $password,
 		];
 
