@@ -21,7 +21,7 @@ class CreateDogsTable extends Migration
             $table->integer('age')->nullable();
             $table->enum('size', ['small', 'medium', 'large']);
             $table->enum('gender', ['male', 'female']);
-            $table->string('breed');
+            $table->string('breed')->nullable();
             $table->string('color');
             $table->boolean('declawed');
             $table->boolean('neutered');
@@ -36,9 +36,9 @@ class CreateDogsTable extends Migration
             $table->tinyInteger('health_level');
 
             // Descriptions
-            $table->text('description');
-            $table->string('excerpt');
-            $table->text('special_needs');
+            $table->text('description')->nullable();
+            $table->string('excerpt')->nullable();
+            $table->text('special_needs')->nullable();
             
             $table->timestamps();
         });

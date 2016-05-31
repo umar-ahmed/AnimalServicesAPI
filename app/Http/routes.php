@@ -24,7 +24,7 @@ Route::post('oauth/access_token', function() {
 });
 
 Route::post('api/v1/users', 'UserController@store');
-
+Route::post('api/v1/dogs', 'DogController@store');
 
 // API routes
 Route::group(['prefix' => 'api/v1', 'middleware' => 'oauth'], function () {
@@ -46,7 +46,9 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'oauth'], function () {
 	Route::resource('account', 'AccountController');
 
 	// Dog Routes
-	Route::resource('dogs', 'DogController');
+	Route::resource('dogs', 'DogController', ['except' => [
+    	'store'
+	]]);
 	
 	// Feed Routes
 	Route::get('feed/{code}', 'FeedController@index');
