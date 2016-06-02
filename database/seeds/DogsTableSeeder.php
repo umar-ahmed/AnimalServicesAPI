@@ -58,5 +58,8 @@ class DogsTableSeeder extends Seeder
             'special_needs' => 'Some special needs',
         ));
 
+        // Create dummy dogs
+        factory(App\Dog::class, 50)->create();
+
     }
 }

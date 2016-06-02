@@ -11,11 +11,26 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(App\Dog::class, function (Faker\Generator $faker) {
     return [
+        'reference_num' => $faker->randomNumber($nbDigits = 6),
         'name' => $faker->name,
-        'email' => $faker->safeEmail,
-        'password' => bcrypt(str_random(10)),
-        'remember_token' => str_random(10),
+        'age' => $faker->randomDigit,
+        'size' => $faker->randomElement($array = array ('small','medium','large')),
+        'gender' => $faker->randomElement($array = array ('male','female')),
+        'breed' => $faker->text($maxNbChars = 50),
+        'color' => $faker->colorName,
+        'declawed' => $faker->boolean,
+        'neutered' => $faker->boolean,
+        'location' => array('name' => 'City of Toronto Animal Services South Region', 'lat' => '43.6346687', 'long' => '-79.6967789'),
+        'intake_date' => $faker->unixTime($max = 'now'),
+        'noise_level' => $faker->numberBetween($min = 0, $max = 9),
+        'activity_level' => $faker->numberBetween($min = 0, $max = 9),
+        'friend_level' => $faker->numberBetween($min = 0, $max = 9),
+        'train_level' => $faker->numberBetween($min = 0, $max = 9),
+        'health_level' => $faker->numberBetween($min = 0, $max = 9),
+        'description' => $faker->text($maxNbChars = 200),
+        'excerpt' => $faker->text($maxNbChars = 200),
+        'special_needs' => $faker->text($maxNbChars = 200),
     ];
 });
