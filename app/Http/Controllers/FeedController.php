@@ -37,7 +37,7 @@ class FeedController extends Controller
 					'health_score' => $atr[5]
 				);
 
-				$response['feed'] = [
+				$response['feed'][] = [
 					'noise' => $score['noise_weight']
 				];
 
