@@ -6,60 +6,82 @@ use Illuminate\Http\Request;
 use App\Dog;
 use Response;
 use App\Http\Requests;
+use Exception;
 
 class FeedController extends Controller
 {
     public function index($code) {
-		
-		try {
-			$statusCode = 200;
-			$response = [
+
+    	$statusCode = 200;
+    	$response = [
 				'feed' => []
 			];
-
-			// Code must have the correct length
-			if (sizeof($code) == 10) {
+		
+		try {
+			
+			// Code must have the correct length and requirements
+			if (
+				strlen($code) == 10 &&
+				preg_match("/^(?:([A-E][0-9])(?!.*\\1))*$/", $code) &&
+				preg_match("/^([A-E][0-9]){5}$/", $code) 
+				) {
 
 				$atr = str_split($code);
+
+				// Weights from 1 to 5
 				$weight = array(
-					'noise_weight' => ord($atr[0]) - 65,
-					'activity_weight' => ord($atr[2]) - 65,
-					'friend_weight' => ord($atr[4]) - 65,
-					'train_weight' => ord($atr[6]) - 65,
-					'health_weight' => ord($atr[8]) - 65
+					'noise' => ord($atr[0]) - 64,  // 1
+					'activity' => ord($atr[2]) - 64,  // 2
+					'friend' => ord($atr[4]) - 64,  // 3
+					'train' => ord($atr[6]) - 64,  // 4
+					'health' => ord($atr[8]) - 64  // 5
 				);
 
+				// Scores from 1 to 5
 				$score = array(
-					'noise_score' => $atr[1],
-					'activity_score' => $atr[2],
-					'friend_score' => $atr[3],
-					'train_score' => $atr[4],
-					'health_score' => $atr[5]
+					'noise' => $atr[1], // 1
+					'activity' => $atr[3],  // 2
+					'friend' => $atr[5],  // 3
+					'train' => $atr[7], // 4
+					'health' => $atr[9]  // 5
 				);
 
-				$response['feed'][] = [
-					'noise' => $score['noise_weight']
-				];
+				$threshold = 2;
 
-				/*$selection = Dog::where('noise_level',$atr[0])
-						->where('activity_level',$atr[1])
-						->where('friend_level',$atr[2])
-						->where('train_level',$atr[3])
-						->where('health_level',$atr[4])
-						->get();*/
+				// Compute ranges with edge protection
+				$noiseMin = max($score['noise'] - $threshold * $weight['noise'], 0);  // 0
+				$noiseMax = min($score['noise'] + $threshold * $weight['noise'], 9);  // 
+				$activityMin = max($score['activity'] - $threshold * $weight['activity'], 0);
+				$activityMax = min($score['activity'] + $threshold * $weight['activity'], 9);
+				$friendMin = max($score['friend'] - $threshold * $weight['friend'], 0);
+				$friendMax = min($score['friend'] + $threshold * $weight['friend'], 9);
+				$trainMin = max($score['train'] - $threshold * $weight['train'], 0);
+				$trainMax = min($score['train'] + $threshold * $weight['train'], 9);
+				$healthMin = max($score['health'] - $threshold * $weight['health'], 0);
+				$healthMax = min($score['health'] + $threshold * $weight['health'], 9);
 
-				/*foreach($selection as $dog){
+				// Perform query
+				$selection = Dog::whereBetween('noise_level', [$noiseMin, $noiseMax])
+					->whereBetween('activity_level', [$activityMin, $activityMax])
+					->whereBetween('friend_level', [$friendMin, $friendMax])
+					->whereBetween('train_level', [$trainMin, $trainMax])
+					->whereBetween('health_level', [$healthMin, $healthMax])
+					->get();
+
+
+				foreach($selection as $dog){
 
 	                $response['feed'][] = [
 	                	'id' => $dog->id,
 	                    'name' => $dog->name,
 	                ];
-	            }*/
+	            }
 
 			} else {
 
 				throw new Exception("Error Processing Request", 1);
-
+				
+				
 			}
 		} catch (Exception $e) {
 			$statusCode = 400;

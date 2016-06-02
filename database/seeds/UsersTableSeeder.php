@@ -20,7 +20,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'umar.ahmed1998@gmail.com',
             'username' => 'umar-ahmed',
             'password' => Hash::make('password'),
-            'code' => '12345'
+            'code' => 'A1B2C3D4E5'
         ));
 
         $user1->dogs()->attach(1);
@@ -30,7 +30,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'abhay6547@gmail.com',
             'username' => 'abhay-vaidya',
             'password' => Hash::make('password'),
-            'code' => '54321'
+            'code' => 'A5B4C3D2E1'
         ));
 
         $user2->dogs()->attach(2);
