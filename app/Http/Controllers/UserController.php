@@ -52,7 +52,7 @@ class UserController extends Controller
 
         if ($validator->fails()) {
             return Response::json( array(
-                'error' => 'Malformed request.',
+                'message' => 'Malformed request.',
                 'error_description' => $validator->errors()->all()
             ), 409);
         } else {
