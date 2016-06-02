@@ -22,11 +22,11 @@ class FeedController extends Controller
 
 				$atr = str_split($code);
 				$weight = array(
-					'noise_weight' => $atr[0],
-					'activity_weight' => $atr[2],
-					'friend_weight' => $atr[4],
-					'train_weight' => $atr[6],
-					'health_weight' => $atr[8]
+					'noise_weight' => ord($atr[0]) - 65,
+					'activity_weight' => ord($atr[2]) - 65,
+					'friend_weight' => ord($atr[4]) - 65,
+					'train_weight' => ord($atr[6]) - 65,
+					'health_weight' => ord($atr[8]) - 65
 				);
 
 				$score = array(
@@ -37,20 +37,24 @@ class FeedController extends Controller
 					'health_score' => $atr[5]
 				);
 
-				$selection = Dog::where('noise_level',$atr[0])
+				$response['feed'] = [
+					'noise' => $score['noise_weight']
+				];
+
+				/*$selection = Dog::where('noise_level',$atr[0])
 						->where('activity_level',$atr[1])
 						->where('friend_level',$atr[2])
 						->where('train_level',$atr[3])
 						->where('health_level',$atr[4])
-						->get();
+						->get();*/
 
-				foreach($selection as $dog){
+				/*foreach($selection as $dog){
 
 	                $response['feed'][] = [
 	                	'id' => $dog->id,
 	                    'name' => $dog->name,
 	                ];
-	            }
+	            }*/
 
 			} else {
 
