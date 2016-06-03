@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,6 +17,14 @@ class DatabaseSeeder extends Seeder
 		// Add or Uncomment this line
 		$this->call(UsersTableSeeder::class);
         $this->call(DogsTableSeeder::class);
+
+        // Seed oauth_clients
+        DB::insert("INSERT INTO oauth_clients (id, secret, name) values (?, ?, ?)", [
+            "f3d259ddd3ed8ff3843839b", 
+            "4c7f6f8fa93d59c45502c0ae8c4a95b", 
+            "Buddi App"
+        ]);
+
 
         Eloquent::reguard();
     }
