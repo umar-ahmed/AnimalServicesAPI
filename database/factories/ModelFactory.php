@@ -14,11 +14,11 @@
 $factory->define(App\Dog::class, function (Faker\Generator $faker) {
     return [
         'reference_num' => $faker->randomNumber($nbDigits = 6),
-        'name' => $faker->name,
+        'name' => $faker->firstName($gender = null),
         'age' => $faker->randomDigit,
         'size' => $faker->randomElement($array = array ('small','medium','large')),
         'gender' => $faker->randomElement($array = array ('male','female')),
-        'breed' => $faker->text($maxNbChars = 50),
+        'breed' => $faker->text($maxNbChars = 15),
         'color' => $faker->colorName,
         'declawed' => true,
         'neutered' => true,
