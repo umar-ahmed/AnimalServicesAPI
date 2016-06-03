@@ -17,6 +17,7 @@ class DogsTableSeeder extends Seeder
         Dog::create(array(
         	'reference_num' => 'A700423',
             'name' => 'Remy',
+            'image' => 'http://lorempixel.com/256/256/animals',
             'age' => 11,
             'size' => 'small',
             'gender' => 'male',
@@ -39,6 +40,7 @@ class DogsTableSeeder extends Seeder
         Dog::create(array(
         	'reference_num' => 'A700443',
             'name' => 'Spot',
+            'image' => 'http://lorempixel.com/256/256/animals',
             'age' => 5,
             'size' => 'small',
             'gender' => 'female',
