@@ -39,7 +39,7 @@ class AccountController extends Controller
         } catch (Exception $e) {
             $statusCode = 400;
         } finally {
-            return Response::json($response[0], $statusCode);
+            return Response::json($response[0][0], $statusCode);
         }
     }
 

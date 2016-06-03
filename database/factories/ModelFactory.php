@@ -23,7 +23,7 @@ $factory->define(App\Dog::class, function (Faker\Generator $faker) {
         'color' => $faker->colorName,
         'declawed' => true,
         'neutered' => true,
-        'location' => array('name' => 'City of Toronto Animal Services South Region', 'lat' => '43.6346687', 'long' => '-79.6967789'),
+        'location' => array('name' => 'City of Toronto Animal Services South Region', 'lat' => '43.6346687', 'long' => '-79.6967789', 'phone_num' => '4163387297'),
         'intake_date' => $faker->unixTime($max = 'now'),
         'noise_level' => $faker->numberBetween($min = 0, $max = 9),
         'activity_level' => $faker->numberBetween($min = 0, $max = 9),
