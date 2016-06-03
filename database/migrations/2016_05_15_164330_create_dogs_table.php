@@ -18,7 +18,7 @@ class CreateDogsTable extends Migration
             // Static attributes
             $table->string('reference_num')->unique();
             $table->string('name');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->integer('age')->nullable();
             $table->enum('size', ['small', 'medium', 'large']);
             $table->enum('gender', ['male', 'female']);
