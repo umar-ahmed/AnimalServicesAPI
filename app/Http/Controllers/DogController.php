@@ -77,7 +77,7 @@ class DogController extends Controller
             'friend_level' => 'required|integer|digits:1',
             'train_level' => 'required|integer|digits:1',
             'health_level' => 'required|integer|digits:1',
-            'description': 'required',
+            'description' => 'required',
             // 'excerpt' => 'required',
         );
 
