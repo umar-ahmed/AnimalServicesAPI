@@ -73,6 +73,7 @@ class FeedController extends Controller
 
 	                $response['feed'][] = [
 	                	'id' => $dog->id,
+	                	'image' => $dog->image,
 	                    'name' => $dog->name,
 	                    'age' => $dog->age,
 	                    'breed' => $dog->breed

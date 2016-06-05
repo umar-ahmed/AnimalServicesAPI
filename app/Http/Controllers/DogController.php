@@ -66,7 +66,7 @@ class DogController extends Controller
             'age' => 'integer|min:0',
             'size' => 'required|in:small,medium,large',
             'gender' => 'required|in:male,female',
-            // 'breed' => '',
+            'breed' => 'required',
             'color' => 'required',
             'declawed' => 'required|boolean',
             'neutered' => 'required|boolean',
@@ -77,7 +77,7 @@ class DogController extends Controller
             'friend_level' => 'required|integer|digits:1',
             'train_level' => 'required|integer|digits:1',
             'health_level' => 'required|integer|digits:1',
-            // description: "This is a long description.",
+            'description': 'required',
             // 'excerpt' => 'required',
         );
 
