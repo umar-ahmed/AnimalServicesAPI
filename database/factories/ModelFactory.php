@@ -15,7 +15,7 @@ $factory->define(App\Dog::class, function (Faker\Generator $faker) {
     return [
         'reference_num' => $faker->randomNumber($nbDigits = 6),
         'name' => $faker->firstName($gender = null),
-        'image' => "http://loremflickr.com/320/240/dog?random=" . $faker->randomDigit,
+        'image' => "http://loremflickr.com/320/240/dog?random=" . $faker->randomNumber($nbDigits = 6),
         'age' => $faker->randomDigit,
         'size' => $faker->randomElement($array = array ('small','medium','large')),
         'gender' => $faker->randomElement($array = array ('male','female')),
