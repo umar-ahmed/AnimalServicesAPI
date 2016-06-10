@@ -9,3 +9,5 @@ The API user will have access to the following features depending on their token
 * View a user's profile (authenticated user, limited access for non-authenticated users)
 * Create/Edit user profiles (authenticated user)
 * View animals matched to a user (authenticated user)
+
+<b>Full Documentation can be found here: <a href="https://docs.google.com/document/d/1UbV2zKpUkNiHwvEeVGgPr61fI-jGfxI-RYktH6SkmFo/edit?usp=sharing">API Documentation</a></b>
